@@ -1,13 +1,13 @@
-import React from 'react'
-import { Counter } from './components/Counter'
-import './App.css'
+//import React from "react";
+import { Countries } from "./components/Countries";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <Counter />
+      <Countries />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
