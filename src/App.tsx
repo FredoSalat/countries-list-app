@@ -1,11 +1,13 @@
-//import React from "react";
-import { Countries } from "./components/Countries";
+import React from "react";
+import CountriesList from "./components/pages/CountriesList";
 import "./App.css";
+import Layout from "./components/layout/Layout";
+import Index from "./routes";
 
 function App() {
   return (
     <div className="App">
-      <Countries />
+      <Index></Index>
     </div>
   );
 }
