@@ -1,7 +1,9 @@
 export interface CountryT {
   name: Name;
+  flags: Flag;
+  region: string;
   population: number;
-  language: string;
+  languages: Language;
 }
 
 export interface CountriesState {
@@ -14,4 +16,13 @@ export interface CountriesState {
 export interface Name {
   common: string;
   official: string;
+}
+
+export interface Flag {
+  png: string;
+  alt: string;
+}
+
+export interface Language {
+  [key: string]: string;
 }

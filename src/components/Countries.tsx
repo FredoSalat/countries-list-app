@@ -16,13 +16,22 @@ export function Countries() {
   }, [dispatch]);
 
   return (
-    <div>
+    <>
       <h1>Countries</h1>
-      <div>
-        {countries.map((country) => {
-          return <Country country={country} />;
-        })}
-      </div>
-    </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Flag</th>
+            <th>Name</th>
+            <th>Region</th>
+            <th>Population</th>
+            <th>Languages</th>
+          </tr>
+          {countries.map((country, index) => {
+            return <Country country={country} key={index} />;
+          })}
+        </thead>
+      </table>
+    </>
   );
 }
