@@ -27,7 +27,17 @@ export const countriesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchCountries.fulfilled, (state, action) => {
+      state.isLoading = false;
       state.countries = action.payload;
+    });
+    builder.addCase(fetchCountries.pending, (state, action) => {
+      state.isLoading = true;
+      state.message = "Loading countries";
+    });
+    builder.addCase(fetchCountries.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = "Failed loading countries";
     });
   },
 });

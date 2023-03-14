@@ -1,21 +1,19 @@
 import { Link } from "react-router-dom";
 import "./NavBar.css";
 
-type Props = {};
-
 function NavBar() {
   return (
     <>
       <header className="navbar">
         <nav className="navbar">
           <Link to="/" className="navbar">
-            Home
+            Home page
           </Link>
           <Link to="/list" className="navbar">
-            List
+            List of countries
           </Link>
           <Link to="/liked" className="navbar">
-            Liked
+            Liked countries
           </Link>
         </nav>
       </header>

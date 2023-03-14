@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { fetchCountries } from "../../redux/countries/countriesSlice";
 
@@ -24,7 +25,17 @@ function CountriesList() {
   }, [dispatch]);
 
   return (
-    <>
+    <div className="countries">
+      {isLoading && (
+        <div>
+          <h1>{message}</h1>
+        </div>
+      )}
+      {isError && (
+        <div>
+          <h1>{message}</h1>
+        </div>
+      )}
       <table>
         <thead>
           <tr>
@@ -51,12 +62,18 @@ function CountriesList() {
                 <td>
                   {country.languages ? listLanguages(country.languages) : ""}
                 </td>
+                <td>Heart</td>
+                <td>
+                  <Link to="/country-page" className="navbar">
+                    Country Page
+                  </Link>
+                </td>
               </tr>
             );
           })}
         </thead>
       </table>
-    </>
+    </div>
   );
 }
 

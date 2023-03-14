@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-function HomePage({}: Props) {
+function HomePage() {
   return <div>HomePage</div>;
 }
 

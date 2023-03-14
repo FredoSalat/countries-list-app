@@ -1,12 +1,10 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import Layout from "../components/layout/Layout";
 import CountriesList from "../components/pages/CountriesList";
-import HomePage from "../components/pages/HomePage";
+import Country from "../components/pages/Country";
+import HomePage from "../components/pages/Home";
 import LikedCountries from "../components/pages/LikedCountries";
-
-type Props = {};
 
 function Index() {
   return (
@@ -17,6 +15,7 @@ function Index() {
           <Route path="/" element={<HomePage />} />
           <Route path="/list" element={<CountriesList />} />
           <Route path="/liked" element={<LikedCountries />} />
+          <Route path="/country-page" element={<Country />} />
         </Routes>
       </main>
     </Router>
