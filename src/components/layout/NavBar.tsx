@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import "./NavBar.css";
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -9,9 +8,7 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import PublicIcon from "@mui/icons-material/Public";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -128,14 +125,17 @@ function NavBar() {
           <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
             <Button
               onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: "white", display: "block" }}
+              sx={{
+                color: "white",
+                display: "block",
+              }}
               href="/list"
             >
               <PublicIcon />
             </Button>
             <Button
               onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: "white", display: "block" }}
+              sx={{ color: "white", display: "block" }}
               href="/liked"
             >
               <FavoriteIcon />

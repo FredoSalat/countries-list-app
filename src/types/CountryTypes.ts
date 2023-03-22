@@ -8,9 +8,11 @@ export interface CountryT {
 
 export interface CountriesState {
   countries: CountryT[];
+  countryDetails: CountryT[];
   isLoading: boolean;
   isError: boolean;
   message: string;
+  liked: CountryT[];
 }
 
 export interface Name {
