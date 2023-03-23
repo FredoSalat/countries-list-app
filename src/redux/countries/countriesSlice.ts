@@ -38,7 +38,12 @@ export const countriesSlice = createSlice({
   initialState,
   reducers: {
     likeCountry: (state, action) => {
-      console.log(action.payload);
+      state.liked = [...state.liked, action.payload];
+    },
+    search: (state, { payload }) => {
+      state.countries = state.countries.filter((country) =>
+        country.name.common.toLowerCase().includes(payload)
+      );
     },
   },
   extraReducers: (builder) => {
@@ -57,7 +62,6 @@ export const countriesSlice = createSlice({
     });
     builder.addCase(fetchCountry.fulfilled, (state, action) => {
       state.isLoading = false;
-
       state.countryDetails = action.payload;
     });
     builder.addCase(fetchCountry.pending, (state, action) => {
@@ -74,6 +78,6 @@ export const countriesSlice = createSlice({
 
 //export const selectCountry = (state: RootState) => state.countries.value;
 
-export const { likeCountry } = countriesSlice.actions;
+export const { likeCountry, search } = countriesSlice.actions;
 
 export default countriesSlice.reducer;

@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import {
   fetchCountries,
   likeCountry,
+  search,
 } from "../../redux/countries/countriesSlice";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -17,7 +18,9 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import TextField from "@mui/material/TextField";
 import { CountryT } from "../../types/CountryTypes";
+import { Box } from "@mui/material";
 
 const listLanguages = (object: Object) => {
   const languagesList = Object.values(object); // converting object to array
@@ -40,103 +43,131 @@ function CountriesList() {
     dispatch(fetchCountries());
   }, [dispatch]);
 
+  const [searchInput, setSearchInput] = useState<string>("");
+  const searchHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setSearchInput((prevState) => (prevState = event.target.value));
+  };
+
+  useEffect(() => {
+    dispatch(search(searchInput));
+  }, [searchInput, dispatch]);
+
   const onLikeClickHandler = (country: CountryT) => {
     dispatch(likeCountry(country));
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <Typography variant="subtitle2">
-                <strong>Flag</strong>
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="subtitle2">
-                <strong>Name</strong>
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="subtitle2">
-                <strong>Region</strong>
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="subtitle2">
-                <strong>Population</strong>
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="subtitle2">
-                <strong>Language</strong>
-              </Typography>
-            </TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {isLoading && (
-            <div>
-              <h1>{message}</h1>
-            </div>
-          )}
-          {isError && (
-            <div>
-              <h1>{message}</h1>
-            </div>
-          )}
-          {countries.map((country, index) => (
-            <TableRow
-              key={index}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                <img
-                  src={country.flags.png}
-                  alt={country.flags.alt}
-                  width="120"
-                  height="80"
-                />
-              </TableCell>
-              <TableCell>{country.name.official}</TableCell>
-              <TableCell>{country.region}</TableCell>
-              <TableCell>{country.population}</TableCell>
+    <>
+      <Box
+        sx={{
+          mt: "1rem",
+          p: "0 1rem 1rem 1rem",
+          display: "flex",
+          justifyContent: "flex-start",
+        }}
+      >
+        <TextField
+          id="standard-search"
+          label="Search field"
+          type="search"
+          variant="standard"
+          value={searchInput}
+          onChange={searchHandler}
+        />
+      </Box>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
               <TableCell>
-                {country.languages ? listLanguages(country.languages) : ""}
+                <Typography variant="subtitle2">
+                  <strong>Flag</strong>
+                </Typography>
               </TableCell>
               <TableCell>
-                <Tooltip title="Like" placement="left" arrow>
-                  <IconButton
-                    sx={{ "&:hover": { color: "red" } }}
-                    aria-label=""
-                    onClick={() => {
-                      onLikeClickHandler(country);
-                    }}
-                  >
-                    <FavoriteIcon />
-                  </IconButton>
-                </Tooltip>
+                <Typography variant="subtitle2">
+                  <strong>Name</strong>
+                </Typography>
               </TableCell>
               <TableCell>
-                <IconButton
-                  sx={{ "&:hover": { color: "black" } }}
-                  aria-label=""
-                  component={Link}
-                  to="/country-page"
-                  state={country.name.common}
-                >
-                  <ArrowForwardIosIcon />
-                </IconButton>
+                <Typography variant="subtitle2">
+                  <strong>Region</strong>
+                </Typography>
               </TableCell>
+              <TableCell>
+                <Typography variant="subtitle2">
+                  <strong>Population</strong>
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="subtitle2">
+                  <strong>Language</strong>
+                </Typography>
+              </TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {isLoading && (
+              <div>
+                <h1>{message}</h1>
+              </div>
+            )}
+            {isError && (
+              <div>
+                <h1>{message}</h1>
+              </div>
+            )}
+            {countries.map((country, index) => (
+              <TableRow
+                key={index}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  <img
+                    src={country.flags.png}
+                    alt={country.flags.alt}
+                    width="120"
+                    height="80"
+                  />
+                </TableCell>
+                <TableCell>{country.name.official}</TableCell>
+                <TableCell>{country.region}</TableCell>
+                <TableCell>{country.population}</TableCell>
+                <TableCell>
+                  {country.languages ? listLanguages(country.languages) : ""}
+                </TableCell>
+                <TableCell>
+                  <Tooltip title="Like" placement="left" arrow>
+                    <IconButton
+                      sx={{ "&:hover": { color: "red" } }}
+                      aria-label=""
+                      onClick={() => {
+                        onLikeClickHandler(country);
+                      }}
+                    >
+                      <FavoriteIcon />
+                    </IconButton>
+                  </Tooltip>
+                </TableCell>
+                <TableCell>
+                  <IconButton
+                    sx={{ "&:hover": { color: "black" } }}
+                    aria-label=""
+                    component={Link}
+                    to="/country-page"
+                    state={country.name.common}
+                  >
+                    <ArrowForwardIosIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }
 

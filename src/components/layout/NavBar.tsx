@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import PublicIcon from "@mui/icons-material/Public";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import HouseIcon from "@mui/icons-material/House";
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -123,6 +124,13 @@ function NavBar() {
             COUNTRIES
           </Typography>
           <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{ color: "white", display: "block" }}
+              href="/"
+            >
+              <HouseIcon />
+            </Button>
             <Button
               onClick={handleCloseNavMenu}
               sx={{
