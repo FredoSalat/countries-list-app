@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { RootState } from "../../app/store";
-import { CountriesState, CountryT } from "../../types/CountryTypes";
+import { CountriesState } from "../../types/slicerTypes";
+import { CountryT } from "../../types/countryTypes";
 
 const COUNTRIES_URL = "https://restcountries.com/v3.1/all";
 
@@ -40,7 +40,7 @@ export const countriesSlice = createSlice({
     likeCountry: (state, action) => {
       state.liked = [...state.liked, action.payload];
     },
-    search: (state, { payload }) => {
+    searchCountry: (state, { payload }) => {
       state.countries = state.countries.filter((country) =>
         country.name.common.toLowerCase().includes(payload)
       );
@@ -78,6 +78,6 @@ export const countriesSlice = createSlice({
 
 //export const selectCountry = (state: RootState) => state.countries.value;
 
-export const { likeCountry, search } = countriesSlice.actions;
+export const { likeCountry, searchCountry } = countriesSlice.actions;
 
 export default countriesSlice.reducer;

@@ -14,7 +14,7 @@ import PublicIcon from "@mui/icons-material/Public";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import HouseIcon from "@mui/icons-material/House";
 
-function NavBar() {
+function NavBar(props: any) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
