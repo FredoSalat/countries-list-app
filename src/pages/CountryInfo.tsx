@@ -17,7 +17,7 @@ function CountryInfo() {
     dispatch(fetchCountry(countryName));
   }, [countryName, dispatch]);
 
-  /*   return (
+  return (
     <>
       {isLoading && (
         <div>
@@ -29,17 +29,7 @@ function CountryInfo() {
           <h1>{message}</h1>
         </div>
       )}{" "}
-      <CountryCard country={country}></CountryCard>;
-    </>
-  ); */
-  return (
-    <>
-      {isError && <h1>{message}</h1>}
-      {isLoading ? (
-        <h1>{message}</h1>
-      ) : (
-        <CountryCard countries={countryDetails} />
-      )}
+      <CountryCard countries={countryDetails}></CountryCard>;
     </>
   );
 }

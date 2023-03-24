@@ -12,8 +12,8 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import { TableSortLabel } from "@mui/material";
-
 import { TableT } from "../../types/tableTypes";
+import { useAppSelector } from "../../app/hooks";
 
 const listLanguages = (object: Object) => {
   const languagesList = Object.values(object); // converting object to array
@@ -28,6 +28,8 @@ const listLanguages = (object: Object) => {
 
 function CountriesTable(props: TableT) {
   const { countries } = props;
+
+  const { searchTerm } = useAppSelector((state) => state.countriesR);
 
   /*   const onLikeClickHandler = (country: CountryT) => {
     dispatch(likeCountry(country));
@@ -74,51 +76,63 @@ function CountriesTable(props: TableT) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {countries.map((country, index) => (
-            <TableRow
-              key={index}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                <img
-                  src={country.flags.png}
-                  alt={country.flags.alt}
-                  width="120"
-                  height="80"
-                />
-              </TableCell>
-              <TableCell>{country.name.official}</TableCell>
-              <TableCell>{country.region}</TableCell>
-              <TableCell>{country.population}</TableCell>
-              <TableCell>
-                {country.languages ? listLanguages(country.languages) : ""}
-              </TableCell>
-              <TableCell>
-                <Tooltip title="Like" placement="left" arrow>
+          {countries
+            .filter((searchResult) => {
+              if (searchTerm === "") {
+                return searchResult;
+              } else if (
+                searchResult.name.common
+                  .toLowerCase()
+                  .includes(searchTerm.toLowerCase())
+              ) {
+                return searchResult;
+              }
+            })
+            .map((country, index) => (
+              <TableRow
+                key={index}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  <img
+                    src={country.flags.png}
+                    alt={country.flags.alt}
+                    width="120"
+                    height="80"
+                  />
+                </TableCell>
+                <TableCell>{country.name.common}</TableCell>
+                <TableCell>{country.region}</TableCell>
+                <TableCell>{country.population}</TableCell>
+                <TableCell>
+                  {country.languages ? listLanguages(country.languages) : ""}
+                </TableCell>
+                <TableCell>
+                  <Tooltip title="Like" placement="left" arrow>
+                    <IconButton
+                      sx={{ "&:hover": { color: "red" } }}
+                      aria-label=""
+                      onClick={() => {
+                        //onLikeClickHandler(country);
+                      }}
+                    >
+                      <FavoriteIcon />
+                    </IconButton>
+                  </Tooltip>
+                </TableCell>
+                <TableCell>
                   <IconButton
-                    sx={{ "&:hover": { color: "red" } }}
+                    sx={{ "&:hover": { color: "black" } }}
                     aria-label=""
-                    onClick={() => {
-                      //onLikeClickHandler(country);
-                    }}
+                    component={Link}
+                    to="/country"
+                    state={country.name.common}
                   >
-                    <FavoriteIcon />
+                    <ArrowForwardIosIcon />
                   </IconButton>
-                </Tooltip>
-              </TableCell>
-              <TableCell>
-                <IconButton
-                  sx={{ "&:hover": { color: "black" } }}
-                  aria-label=""
-                  component={Link}
-                  to="/country"
-                  state={country.name.common}
-                >
-                  <ArrowForwardIosIcon />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          ))}
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </TableContainer>

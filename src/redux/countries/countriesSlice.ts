@@ -14,6 +14,7 @@ const initialState: CountriesState = {
   isError: false,
   message: "",
   liked: [],
+  searchTerm: "",
 };
 
 export const fetchCountries = createAsyncThunk(
@@ -37,13 +38,11 @@ export const countriesSlice = createSlice({
   name: "countries",
   initialState,
   reducers: {
-    likeCountry: (state, action) => {
+    /* likeCountry: (state, action) => {
       state.liked = [...state.liked, action.payload];
-    },
+    }, */
     searchCountry: (state, { payload }) => {
-      state.countries = state.countries.filter((country) =>
-        country.name.common.toLowerCase().includes(payload)
-      );
+      state.searchTerm = payload;
     },
   },
   extraReducers: (builder) => {
@@ -78,6 +77,6 @@ export const countriesSlice = createSlice({
 
 //export const selectCountry = (state: RootState) => state.countries.value;
 
-export const { likeCountry, searchCountry } = countriesSlice.actions;
+export const { /* likeCountry, */ searchCountry } = countriesSlice.actions;
 
 export default countriesSlice.reducer;

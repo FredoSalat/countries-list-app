@@ -7,4 +7,5 @@ export interface CountriesState {
   isError: boolean;
   message: string;
   liked: CountryT[];
+  searchTerm: string;
 }

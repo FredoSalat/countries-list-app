@@ -19,14 +19,14 @@ function CountriesList() {
     dispatch(fetchCountries());
   }, [dispatch]);
 
-  const [search, setSearch] = useState<string>("");
+  /* const [search, setSearch] = useState<string>("");
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSearch((prevState) => (prevState = event.target.value));
-  };
+  }; */
 
-  useEffect(() => {
-    dispatch(searchCountry(search));
-  }, [search, dispatch]);
+  const searchHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    dispatch(searchCountry(event.target.value));
+  };
 
   return (
     <>
@@ -53,7 +53,7 @@ function CountriesList() {
           label="Search country"
           type="search"
           variant="standard"
-          value={search}
+          //value={"search"}
           onChange={searchHandler}
         />
       </Box>

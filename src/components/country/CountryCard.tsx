@@ -78,10 +78,8 @@ function Country(props: CardT) {
           <CardContent>
             <Typography variant="body2" color="text.secondary">
               The country belongs to {country.region} region and{" "}
-              {country.subregion} sub-region. Located at the.
-              {country.latlng[0].toFixed(2)}&deg;N and{" "}
-              {country.latlng[1].toFixed(2)}&deg;W, this country has population
-              of {country.population}.{` `}
+              {country.subregion} sub-region. This country has population of{" "}
+              {country.population}.{` `}
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
