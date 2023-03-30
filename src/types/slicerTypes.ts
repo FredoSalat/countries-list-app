@@ -9,3 +9,7 @@ export interface CountriesState {
   liked: CountryT[];
   searchTerm: string;
 }
+
+export type LikedType = {
+  payload: CountryT;
+};

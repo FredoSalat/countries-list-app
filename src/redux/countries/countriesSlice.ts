@@ -1,7 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { CountriesState } from "../../types/slicerTypes";
+import { CountriesState, LikedType } from "../../types/slicerTypes";
 import { CountryT } from "../../types/countryTypes";
+import { RootState } from "../../app/store";
 
 const COUNTRIES_URL = "https://restcountries.com/v3.1/all";
 
@@ -38,9 +39,17 @@ export const countriesSlice = createSlice({
   name: "countries",
   initialState,
   reducers: {
-    /* likeCountry: (state, action) => {
-      state.liked = [...state.liked, action.payload];
-    }, */
+    likeCountry: (state, action: LikedType) => {
+      const existingCountry = state.liked.find(
+        (country) => country.name.common === action.payload.name.common
+      );
+      if (existingCountry) {
+        console.log("Country already liked");
+      } else {
+        state.liked = [...state.liked, action.payload];
+        console.log(state.liked);
+      }
+    },
     searchCountry: (state, { payload }) => {
       state.searchTerm = payload;
     },
@@ -77,6 +86,8 @@ export const countriesSlice = createSlice({
 
 //export const selectCountry = (state: RootState) => state.countries.value;
 
-export const { /* likeCountry, */ searchCountry } = countriesSlice.actions;
+export const { likeCountry, searchCountry } = countriesSlice.actions;
+
+export const selectLiked = (state: RootState) => state.countriesR.liked;
 
 export default countriesSlice.reducer;

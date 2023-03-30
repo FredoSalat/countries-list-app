@@ -13,7 +13,9 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import { TableSortLabel } from "@mui/material";
 import { TableT } from "../../types/tableTypes";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { likeCountry } from "../../redux/countries/countriesSlice";
+import { CountryT } from "../../types/countryTypes";
 
 const listLanguages = (object: Object) => {
   const languagesList = Object.values(object); // converting object to array
@@ -31,9 +33,11 @@ function CountriesTable(props: TableT) {
 
   const { searchTerm } = useAppSelector((state) => state.countriesR);
 
-  /*   const onLikeClickHandler = (country: CountryT) => {
+  const dispatch = useAppDispatch();
+
+  const onLikeClickHandler = (country: CountryT) => {
     dispatch(likeCountry(country));
-  }; */
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -113,7 +117,7 @@ function CountriesTable(props: TableT) {
                       sx={{ "&:hover": { color: "red" } }}
                       aria-label=""
                       onClick={() => {
-                        //onLikeClickHandler(country);
+                        onLikeClickHandler(country);
                       }}
                     >
                       <FavoriteIcon />

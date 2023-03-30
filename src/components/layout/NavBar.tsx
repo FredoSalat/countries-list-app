@@ -13,8 +13,10 @@ import MenuItem from "@mui/material/MenuItem";
 import PublicIcon from "@mui/icons-material/Public";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import HouseIcon from "@mui/icons-material/House";
+import { useNavigate } from "react-router-dom";
 
 function NavBar(props: any) {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -30,11 +32,15 @@ function NavBar(props: any) {
   };
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+    //setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const onMenuClick = (path: string) => {
+    navigate(path);
   };
 
   return (
@@ -125,26 +131,23 @@ function NavBar(props: any) {
           </Typography>
           <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
             <Button
-              onClick={handleCloseNavMenu}
+              onClick={() => onMenuClick("/")}
               sx={{ color: "white", display: "block" }}
-              href="/"
             >
               <HouseIcon />
             </Button>
             <Button
-              onClick={handleCloseNavMenu}
+              onClick={() => onMenuClick("/list")}
               sx={{
                 color: "white",
                 display: "block",
               }}
-              href="/list"
             >
               <PublicIcon />
             </Button>
             <Button
-              onClick={handleCloseNavMenu}
+              onClick={() => onMenuClick("/liked")}
               sx={{ color: "white", display: "block" }}
-              href="/liked"
             >
               <FavoriteIcon />
             </Button>
