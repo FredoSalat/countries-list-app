@@ -34,7 +34,7 @@ export interface CountryT {
   startOfWeek: StartOfWeek;
   capitalInfo: CapitalInfo;
   postalCode?: PostalCode;
-  isSaved?: boolean;
+  isLiked?: boolean;
 }
 
 export interface CapitalInfo {

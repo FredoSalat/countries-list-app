@@ -16,6 +16,20 @@ import { TableT } from "../../types/tableTypes";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { likeCountry } from "../../redux/countries/countriesSlice";
 import { CountryT } from "../../types/countryTypes";
+import { useState, useCallback } from "react";
+
+type SortKeys = keyof CountryT;
+
+type SortOrder = "ascn" | "desc";
+
+function sortData(
+  tableData,
+  sortKey,
+  reverse
+): {
+  tableData: TableT;
+  sortKey: SortKeys;
+};
 
 const listLanguages = (object: Object) => {
   const languagesList = Object.values(object); // converting object to array
@@ -29,6 +43,25 @@ const listLanguages = (object: Object) => {
 };
 
 function CountriesTable(props: TableT) {
+  const [sortKey, setSortKey] = useState<SortKeys>("name");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("ascn");
+
+  const headers = [
+    { key: "flag", label: "Flag" },
+    { key: "name", label: "Name" },
+    { key: "region", label: "Region" },
+    { key: "population", label: "Population" },
+    { key: "language", label: "Language" },
+    { key: "", label: "" },
+    { key: "", label: "" },
+  ];
+
+  const sortedData = useCallback(
+    () =>
+      sortData({ tableData: TableT, sortKey, reverse: sortOrder === "desc" }),
+    []
+  );
+
   const { countries } = props;
 
   const { searchTerm } = useAppSelector((state) => state.countriesR);
@@ -44,39 +77,15 @@ function CountriesTable(props: TableT) {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>
-              <Typography variant="subtitle2">
-                <strong>Flag</strong>
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <TableSortLabel
-              //active={"name" === "name"}
-              //direction="asc"
-              //onClick={createSortHandler("name")}
-              >
-                <Typography variant="subtitle2">
-                  <strong>Name</strong>
-                </Typography>
-              </TableSortLabel>
-            </TableCell>
-            <TableCell>
-              <Typography variant="subtitle2">
-                <strong>Region</strong>
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="subtitle2">
-                <strong>Population</strong>
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="subtitle2">
-                <strong>Language</strong>
-              </Typography>
-            </TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
+            {headers.map((row) => {
+              return (
+                <TableCell key={row.key}>
+                  <Typography variant="subtitle2">
+                    <strong>{row.label}</strong>
+                  </Typography>
+                </TableCell>
+              );
+            })}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -114,13 +123,17 @@ function CountriesTable(props: TableT) {
                 <TableCell>
                   <Tooltip title="Like" placement="left" arrow>
                     <IconButton
-                      sx={{ "&:hover": { color: "red" } }}
-                      aria-label=""
                       onClick={() => {
                         onLikeClickHandler(country);
                       }}
                     >
-                      <FavoriteIcon />
+                      <FavoriteIcon
+                        sx={{
+                          color: country.isLiked
+                            ? "custom.main"
+                            : "primary.light",
+                        }}
+                      ></FavoriteIcon>
                     </IconButton>
                   </Tooltip>
                 </TableCell>

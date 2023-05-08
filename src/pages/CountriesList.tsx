@@ -4,10 +4,10 @@ import {
   fetchCountries,
   searchCountry,
 } from "../redux/countries/countriesSlice";
-
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/material";
 import CountriesTable from "../components/country/CountriesTable";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function CountriesList() {
   const { countries, isLoading, isError, message } = useAppSelector(
@@ -30,34 +30,35 @@ function CountriesList() {
 
   return (
     <>
-      {isLoading && (
-        <div>
-          <h1>{message}</h1>
-        </div>
+      {isLoading ? (
+        <Box>
+          <CircularProgress></CircularProgress>
+        </Box>
+      ) : isError ? (
+        <h1>{message}</h1>
+      ) : (
+        <>
+          {" "}
+          <Box
+            sx={{
+              mt: "1rem",
+              p: "0 1rem 1rem 1rem",
+              display: "flex",
+              justifyContent: "flex-start",
+            }}
+          >
+            <TextField
+              id="standard-search"
+              label="Search country"
+              type="search"
+              variant="standard"
+              //value={"search"}
+              onChange={searchHandler}
+            />
+          </Box>{" "}
+          <CountriesTable countries={countries}></CountriesTable>
+        </>
       )}
-      {isError && (
-        <div>
-          <h1>{message}</h1>
-        </div>
-      )}
-      <Box
-        sx={{
-          mt: "1rem",
-          p: "0 1rem 1rem 1rem",
-          display: "flex",
-          justifyContent: "flex-start",
-        }}
-      >
-        <TextField
-          id="standard-search"
-          label="Search country"
-          type="search"
-          variant="standard"
-          //value={"search"}
-          onChange={searchHandler}
-        />
-      </Box>
-      <CountriesTable countries={countries}></CountriesTable>
     </>
   );
 }

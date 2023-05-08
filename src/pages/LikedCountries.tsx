@@ -1,20 +1,19 @@
 import React from "react";
 import { useAppSelector } from "../app/hooks";
 import CountriesTable from "../components/country/CountriesTable";
-/* import { selectLiked } from "../redux/countries/countriesSlice";
- */
+import Typography from "@mui/material/Typography";
+
 function LikedCountries() {
   const { liked } = useAppSelector((state) => state.countriesR);
-  /*   const liked = useAppSelector(selectLiked);
-   */
-  console.log(liked);
 
   return (
     <>
       {liked.length > 0 ? (
         <CountriesTable countries={liked}></CountriesTable>
       ) : (
-        <div>No Liked countries</div>
+        <Typography variant="h5" sx={{ p: 4 }}>
+          Your list of liked countries is empty
+        </Typography>
       )}
     </>
   );

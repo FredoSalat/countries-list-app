@@ -44,10 +44,12 @@ export const countriesSlice = createSlice({
         (country) => country.name.common === action.payload.name.common
       );
       if (existingCountry) {
-        console.log("Country already liked");
+        state.liked = state.liked.filter(
+          (country) => country.name.common !== action.payload.name.common
+        );
       } else {
-        state.liked = [...state.liked, action.payload];
-        console.log(state.liked);
+        const likedCountry = { ...action.payload, isLiked: true };
+        state.liked = [...state.liked, likedCountry];
       }
     },
     searchCountry: (state, { payload }) => {
